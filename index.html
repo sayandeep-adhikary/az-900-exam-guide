@@ -22,24 +22,36 @@ body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
 #backdrop.show { display:block; opacity:1; }
 
 /* Sidebar */
-#sidebar { position:fixed; top:0; left:0; width:290px; height:100vh; overflow-y:auto; -webkit-overflow-scrolling:touch; background:#0f172a; color:#cbd5e1; z-index:50; }
-#sidebar .brand { padding:22px 20px; font-size:22px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1d4ed8,#2563eb); }
+#sidebar { position:fixed; top:0; left:0; width:300px; height:100vh; overflow-y:auto; -webkit-overflow-scrolling:touch; background:#0f172a; color:#cbd5e1; z-index:50; }
+#sidebar .brand { padding:22px 20px; font-size:22px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1d4ed8,#2563eb); position:sticky; top:0; z-index:2; }
 #sidebar .brand small { display:block; font-size:12px; font-weight:400; color:#dbeafe; margin-top:4px; letter-spacing:.5px; }
 #sidebar .brand .owner { display:block; font-size:12px; font-weight:600; color:#fde68a; margin-top:8px; letter-spacing:.3px; }
-#sidebar ul { list-style:none; margin:12px 0; padding:0; }
-#sidebar li a { display:block; padding:12px 20px; color:#cbd5e1; text-decoration:none; font-size:14px; border-left:3px solid transparent; transition:background .15s,border-color .15s; }
-#sidebar li a:hover { background:#1e293b; color:#fff; border-left-color:#3b82f6; }
-#sidebar li a.active { background:#1e293b; color:#fff; border-left-color:#60a5fa; font-weight:600; }
-#sidebar .ico { margin-right:8px; }
+#navlist { list-style:none; margin:10px 0; padding:0; }
+.nav-item { }
+.nav-row { display:flex; align-items:stretch; }
+.nav-link { flex:1 1 auto; min-width:0; display:block; padding:11px 6px 11px 20px; color:#cbd5e1; text-decoration:none; font-size:14px; border-left:3px solid transparent; transition:background .15s,border-color .15s; }
+.nav-link:hover { background:#1e293b; color:#fff; border-left-color:#3b82f6; }
+.nav-link.active { background:#1e293b; color:#fff; border-left-color:#60a5fa; font-weight:600; }
+.nav-toggle { flex:0 0 auto; width:42px; background:transparent; border:none; color:#8ea3bd; cursor:pointer; font-size:12px; transition:transform .2s ease, color .15s; }
+.nav-toggle:hover { color:#fff; background:#1e293b; }
+.nav-toggle.open { transform:rotate(90deg); color:#fff; }
+.nav-toggle.hidden { visibility:hidden; }
+.ico { margin-right:8px; }
+.subnav { list-style:none; margin:0; padding:0; max-height:0; overflow:hidden; background:#0b1220; transition:max-height .3s ease; }
+.subnav.expanded { max-height:70vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.subnav li a.sublink { display:block; padding:9px 16px 9px 42px; color:#93a4bd; text-decoration:none; font-size:12.5px; line-height:1.4; border-left:3px solid transparent; }
+.subnav li a.sublink:hover { background:#1e293b; color:#e2e8f0; }
+.subnav li a.sublink.subactive { color:#fff; border-left-color:#60a5fa; background:#12213c; font-weight:600; }
 .sidefoot { padding:16px 20px; font-size:11px; color:#94a3b8; border-top:1px solid #1e293b; margin-top:10px; }
 .sidefoot strong { color:#fde68a; }
 
-main { margin-left:290px; padding:20px 44px 90px; max-width:1000px; }
-.ownerbar { margin-left:290px; background:#0b1220; color:#e2e8f0; padding:10px 44px; font-size:13px; letter-spacing:.3px; border-bottom:1px solid #1e293b; }
+main { margin-left:300px; padding:20px 44px 90px; max-width:1000px; }
+.ownerbar { margin-left:300px; background:#0b1220; color:#e2e8f0; padding:10px 44px; font-size:13px; letter-spacing:.3px; border-bottom:1px solid #1e293b; }
 .ownerbar b { color:#fde68a; }
 
-section.doc { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:26px 34px; margin:26px 0 0; box-shadow:0 1px 4px rgba(15,23,42,.06); }
+section.doc { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:26px 34px; margin:26px 0 0; box-shadow:0 1px 4px rgba(15,23,42,.06); scroll-margin-top:16px; }
 .md-body { overflow-wrap:break-word; word-wrap:break-word; }
+.md-body h1, .md-body h2, .md-body h3 { scroll-margin-top:16px; }
 .md-body h1 { font-size:clamp(24px,5vw,30px); border-bottom:3px solid #e2e8f0; padding-bottom:12px; margin-top:6px; color:#0f172a; line-height:1.25; }
 .md-body h2 { font-size:clamp(20px,4vw,23px); margin-top:34px; color:#1d4ed8; border-bottom:1px solid #eef2f7; padding-bottom:6px; line-height:1.3; }
 .md-body h3 { font-size:clamp(16px,3.5vw,18px); margin-top:24px; color:#0f172a; }
@@ -66,25 +78,27 @@ section.doc { background:#fff; border:1px solid #e2e8f0; border-radius:14px; pad
 footer { text-align:center; color:#64748b; font-size:13px; margin-top:26px; padding-top:18px; border-top:1px solid #e2e8f0; }
 footer .own { color:#1d4ed8; font-weight:700; }
 
-/* ------- Tablet ------- */
+/* Tablet */
 @media (max-width: 1024px) {
   main { padding:18px 28px 80px; }
   .ownerbar { padding:10px 28px; }
   section.doc { padding:24px 26px; }
 }
 
-/* ------- Mobile ------- */
+/* Mobile */
 @media (max-width: 860px) {
   #topbar { display:flex; }
-  #sidebar { transform:translateX(-100%); transition:transform .28s ease; width:84vw; max-width:330px; box-shadow:2px 0 18px rgba(0,0,0,.35); }
+  #sidebar { transform:translateX(-100%); transition:transform .28s ease; width:86vw; max-width:340px; box-shadow:2px 0 18px rgba(0,0,0,.35); }
   #sidebar.open { transform:none; }
   main, .ownerbar { margin-left:0; }
   main { padding:16px 16px 70px; padding-top:calc(54px + env(safe-area-inset-top) + 10px); }
   .ownerbar { display:none; }
-  section.doc { padding:18px 15px; border-radius:12px; margin-top:16px; }
+  section.doc { padding:18px 15px; border-radius:12px; margin-top:16px; scroll-margin-top:66px; }
+  .md-body h1, .md-body h2, .md-body h3 { scroll-margin-top:66px; }
   .md-body th, .md-body td { padding:8px 10px; font-size:13px; }
   #toTop { right:14px; bottom:14px; width:46px; height:46px; }
-  #sidebar li a { padding:14px 20px; font-size:15px; }
+  .nav-link { padding:13px 6px 13px 20px; font-size:15px; }
+  .subnav li a.sublink { padding:11px 16px 11px 42px; font-size:13.5px; }
 }
 
 @media (max-width: 420px) {
@@ -93,7 +107,7 @@ footer .own { color:#1d4ed8; font-weight:700; }
   .md-body ul, .md-body ol { padding-left:20px; }
 }
 
-/* ------- Print ------- */
+/* Print */
 @media print {
   #sidebar, #toTop, #topbar, #backdrop { display:none !important; }
   main, .ownerbar { margin:0; }
@@ -112,23 +126,62 @@ footer .own { color:#1d4ed8; font-weight:700; }
 <div id="backdrop"></div>
 <nav id="sidebar">
   <div class="brand">AZ-900<small>COMPLETE STUDY GUIDE</small><span class="owner">👤 Sayandeep Adhikary</span></div>
-  <ul>
-      <li><a href="#overview"><span class="ico">🎯</span>Overview &amp; Study Plan</a></li>
-      <li><a href="#m1"><span class="ico">📘</span>Module 1 — Cloud Concepts</a></li>
-      <li><a href="#m2"><span class="ico">📗</span>Module 2 — Azure Architecture</a></li>
-      <li><a href="#m3"><span class="ico">📙</span>Module 3 — Compute &amp; Networking</a></li>
-      <li><a href="#m4"><span class="ico">📕</span>Module 4 — Storage</a></li>
-      <li><a href="#m5"><span class="ico">📒</span>Module 5 — Identity &amp; Security</a></li>
-      <li><a href="#m6"><span class="ico">📓</span>Module 6 — Governance &amp; Cost</a></li>
-      <li><a href="#m7"><span class="ico">📔</span>Module 7 — Monitoring &amp; Mgmt</a></li>
-      <li><a href="#advanced"><span class="ico">🧩</span>Advanced Scenario Questions</a></li>
-      <li><a href="#mock"><span class="ico">🧪</span>Mock Exams (Standard)</a></li>
-      <li><a href="#challenge"><span class="ico">🔥</span>Challenge Mock Exams (Harder)</a></li>
-      <li><a href="#special"><span class="ico">🎲</span>Special Question Types</a></li>
-      <li><a href="#revision"><span class="ico">🧠</span>Mnemonics &amp; Revision Sheet</a></li>
+  <ul id="navlist">
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#overview"><span class="ico">🎯</span>Overview &amp; Study Plan</a><button class="nav-toggle" data-target="overview" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="overview"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m1"><span class="ico">📘</span>Module 1 — Cloud Concepts</a><button class="nav-toggle" data-target="m1" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m1"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m2"><span class="ico">📗</span>Module 2 — Azure Architecture</a><button class="nav-toggle" data-target="m2" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m2"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m3"><span class="ico">📙</span>Module 3 — Compute &amp; Networking</a><button class="nav-toggle" data-target="m3" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m3"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m4"><span class="ico">📕</span>Module 4 — Storage</a><button class="nav-toggle" data-target="m4" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m4"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m5"><span class="ico">📒</span>Module 5 — Identity &amp; Security</a><button class="nav-toggle" data-target="m5" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m5"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m6"><span class="ico">📓</span>Module 6 — Governance &amp; Cost</a><button class="nav-toggle" data-target="m6" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m6"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#m7"><span class="ico">📔</span>Module 7 — Monitoring &amp; Mgmt</a><button class="nav-toggle" data-target="m7" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="m7"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#advanced"><span class="ico">🧩</span>Advanced Scenario Questions</a><button class="nav-toggle" data-target="advanced" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="advanced"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#mock"><span class="ico">🧪</span>Mock Exams (Standard)</a><button class="nav-toggle" data-target="mock" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="mock"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#challenge"><span class="ico">🔥</span>Challenge Mock Exams (Harder)</a><button class="nav-toggle" data-target="challenge" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="challenge"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#special"><span class="ico">🎲</span>Special Question Types</a><button class="nav-toggle" data-target="special" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="special"></ul>
+      </li>
+      <li class="nav-item">
+        <div class="nav-row"><a class="nav-link" href="#revision"><span class="ico">🧠</span>Mnemonics &amp; Revision Sheet</a><button class="nav-toggle" data-target="revision" aria-label="Toggle subsections" aria-expanded="false">&#9656;</button></div>
+        <ul class="subnav" data-for="revision"></ul>
+      </li>
 
   </ul>
-  <div class="sidefoot">730+ practice questions &bull; 8 mock exams (5 standard + 3 challenge) &bull; 80 advanced scenarios<br>Generated 2026-07-13<br>Tip: use Ctrl+F (or your browser's Find) to search everything.<br><br>&copy; 2026 <strong>Sayandeep Adhikary</strong></div>
+  <div class="sidefoot">730+ practice questions &bull; 8 mock exams (5 standard + 3 challenge) &bull; 80 advanced scenarios<br>Tap ▸ to expand a section's sub-topics.<br>Generated 2026-07-13<br><br>&copy; 2026 <strong>Sayandeep Adhikary</strong></div>
 </nav>
 <div class="ownerbar">📚 AZ-900 Microsoft Azure Fundamentals — Complete Study Guide &nbsp;|&nbsp; Prepared &amp; owned by <b>Sayandeep Adhikary</b></div>
 <main>
@@ -11741,7 +11794,7 @@ if(__exports != exports)module.exports = exports;return module.exports}));
 document.addEventListener('DOMContentLoaded', function () {
   if (window.marked && marked.setOptions) { marked.setOptions({ gfm: true, breaks: false, headerIds: true, mangle: false }); }
 
-  // Render each embedded markdown block
+  // 1) Render each embedded markdown block
   document.querySelectorAll('script[type="text/markdown"]').forEach(function (el) {
     var target = document.getElementById(el.getAttribute('data-target'));
     if (target && window.marked) {
@@ -11750,41 +11803,95 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Wrap tables so they scroll horizontally on small screens
+  // 2) Wrap tables so they scroll horizontally on small screens
   document.querySelectorAll('.md-body table').forEach(function (t) {
     if (t.parentNode && t.parentNode.classList && t.parentNode.classList.contains('table-wrap')) return;
-    var w = document.createElement('div');
-    w.className = 'table-wrap';
-    t.parentNode.insertBefore(w, t);
-    w.appendChild(t);
+    var w = document.createElement('div'); w.className = 'table-wrap';
+    t.parentNode.insertBefore(w, t); w.appendChild(t);
+  });
+
+  // 3) Build sub-topic navigation from each section's H2 headings
+  document.querySelectorAll('section.doc').forEach(function (section) {
+    var sid = section.id;
+    var subUl = document.querySelector('.subnav[data-for="' + sid + '"]');
+    var toggle = document.querySelector('.nav-toggle[data-target="' + sid + '"]');
+    if (!subUl) return;
+    var heads = section.querySelectorAll('.md-body h2');
+    if (!heads.length) { if (toggle) toggle.classList.add('hidden'); return; }
+    heads.forEach(function (h, i) {
+      var hid = sid + '-s' + i;
+      h.id = hid;
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#' + hid; a.className = 'sublink';
+      a.textContent = h.textContent.replace(/^[\s#]+/, '').trim();
+      li.appendChild(a); subUl.appendChild(li);
+    });
   });
 
   var sidebar = document.getElementById('sidebar');
   var backdrop = document.getElementById('backdrop');
-  var toggle = document.getElementById('menuToggle');
+  var menuBtn = document.getElementById('menuToggle');
   var toTop = document.getElementById('toTop');
+  var navLinks = [].slice.call(document.querySelectorAll('.nav-link'));
+  var subLinks = [].slice.call(document.querySelectorAll('.sublink'));
+  var secs = [].slice.call(document.querySelectorAll('section.doc'));
+  var allHeads = subLinks.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
 
-  function openMenu() { sidebar.classList.add('open'); backdrop.classList.add('show'); if (toggle) toggle.setAttribute('aria-expanded', 'true'); }
-  function closeMenu() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); if (toggle) toggle.setAttribute('aria-expanded', 'false'); }
+  function absTop(el) { return el.getBoundingClientRect().top + window.pageYOffset; }
 
-  if (toggle) { toggle.addEventListener('click', function () { sidebar.classList.contains('open') ? closeMenu() : openMenu(); }); }
+  // Accordion: open exactly one section's sub-nav (or none)
+  function openOnly(sid) {
+    document.querySelectorAll('.subnav').forEach(function (u) { u.classList.toggle('expanded', u.getAttribute('data-for') === sid); });
+    document.querySelectorAll('.nav-toggle').forEach(function (b) {
+      var on = b.getAttribute('data-target') === sid;
+      b.classList.toggle('open', on); b.setAttribute('aria-expanded', on ? 'true' : 'false');
+    });
+  }
+
+  // Manual caret toggles
+  document.querySelectorAll('.nav-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      var sid = btn.getAttribute('data-target');
+      openOnly(btn.classList.contains('open') ? null : sid);
+    });
+  });
+
+  // Mobile drawer
+  function openMenu() { sidebar.classList.add('open'); backdrop.classList.add('show'); if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true'); }
+  function closeMenu() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false'); }
+  if (menuBtn) { menuBtn.addEventListener('click', function () { sidebar.classList.contains('open') ? closeMenu() : openMenu(); }); }
   if (backdrop) { backdrop.addEventListener('click', closeMenu); }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
 
-  // Active-section highlighting + back-to-top visibility
-  var links = [].slice.call(document.querySelectorAll('#sidebar a'));
-  var secs = [].slice.call(document.querySelectorAll('section.doc'));
+  // Navigating via a top-level link opens its sub-nav
+  navLinks.forEach(function (a) {
+    a.addEventListener('click', function () { openOnly(a.getAttribute('href').slice(1)); closeMenu(); });
+  });
+  // Sub-links just close the drawer (mobile); the anchor handles the jump
+  subLinks.forEach(function (a) { a.addEventListener('click', closeMenu); });
+
+  // Scroll sync: highlight active section + sub-heading, keep active section expanded
+  var lastSec = null;
   function onScroll() {
-    var pos = window.pageYOffset + 140, cur = secs[0];
-    secs.forEach(function (s) { if (s.offsetTop <= pos) cur = s; });
-    if (cur) { links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur.id); }); }
+    var y = window.pageYOffset + 150;
+    var curSec = secs[0];
+    secs.forEach(function (s) { if (absTop(s) <= y) curSec = s; });
+    if (curSec) {
+      navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + curSec.id); });
+      if (curSec.id !== lastSec) { openOnly(curSec.id); lastSec = curSec.id; }
+    }
+    var curHead = null;
+    allHeads.forEach(function (h) { if (absTop(h) <= y) curHead = h; });
+    subLinks.forEach(function (a) { a.classList.toggle('subactive', !!curHead && a.getAttribute('href') === '#' + curHead.id); });
     toTop.style.display = window.pageYOffset > 420 ? 'block' : 'none';
   }
-  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-  toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  onScroll();
 
-  // Close the drawer after tapping a nav link (mobile)
-  links.forEach(function (a) { a.addEventListener('click', closeMenu); });
+  toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 });
 </script>
 </body>
