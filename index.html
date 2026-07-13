@@ -2,62 +2,100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
 <meta name="author" content="Sayandeep Adhikary">
 <title>AZ-900 Complete Study Guide — Sayandeep Adhikary</title>
 <style>
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:#1f2937; background:#f1f5f9; line-height:1.65; }
-#sidebar { position:fixed; top:0; left:0; width:290px; height:100vh; overflow-y:auto; background:#0f172a; color:#cbd5e1; z-index:40; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:#1f2937; background:#f1f5f9; line-height:1.65; overflow-x:hidden; }
+
+/* Mobile top bar (hidden on desktop) */
+#topbar { display:none; position:fixed; top:0; left:0; right:0; height:54px; background:#0f172a; color:#fff; align-items:center; gap:12px; padding:0 14px; z-index:55; box-shadow:0 2px 8px rgba(0,0,0,.3); padding-top:env(safe-area-inset-top); }
+#topbar .topbar-title { font-weight:700; font-size:16px; letter-spacing:.3px; }
+#menuToggle { background:transparent; border:none; color:#fff; font-size:26px; line-height:1; cursor:pointer; width:40px; height:40px; border-radius:8px; }
+#menuToggle:active { background:rgba(255,255,255,.15); }
+
+/* Backdrop for the mobile drawer */
+#backdrop { display:none; position:fixed; inset:0; background:rgba(2,6,23,.55); z-index:48; opacity:0; transition:opacity .25s ease; }
+#backdrop.show { display:block; opacity:1; }
+
+/* Sidebar */
+#sidebar { position:fixed; top:0; left:0; width:290px; height:100vh; overflow-y:auto; -webkit-overflow-scrolling:touch; background:#0f172a; color:#cbd5e1; z-index:50; }
 #sidebar .brand { padding:22px 20px; font-size:22px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1d4ed8,#2563eb); }
 #sidebar .brand small { display:block; font-size:12px; font-weight:400; color:#dbeafe; margin-top:4px; letter-spacing:.5px; }
 #sidebar .brand .owner { display:block; font-size:12px; font-weight:600; color:#fde68a; margin-top:8px; letter-spacing:.3px; }
 #sidebar ul { list-style:none; margin:12px 0; padding:0; }
-#sidebar li a { display:block; padding:10px 20px; color:#cbd5e1; text-decoration:none; font-size:14px; border-left:3px solid transparent; transition:background .15s,border-color .15s; }
+#sidebar li a { display:block; padding:12px 20px; color:#cbd5e1; text-decoration:none; font-size:14px; border-left:3px solid transparent; transition:background .15s,border-color .15s; }
 #sidebar li a:hover { background:#1e293b; color:#fff; border-left-color:#3b82f6; }
 #sidebar li a.active { background:#1e293b; color:#fff; border-left-color:#60a5fa; font-weight:600; }
 #sidebar .ico { margin-right:8px; }
 .sidefoot { padding:16px 20px; font-size:11px; color:#94a3b8; border-top:1px solid #1e293b; margin-top:10px; }
 .sidefoot strong { color:#fde68a; }
-main { margin-left:290px; padding:34px 44px 90px; max-width:1000px; }
+
+main { margin-left:290px; padding:20px 44px 90px; max-width:1000px; }
 .ownerbar { margin-left:290px; background:#0b1220; color:#e2e8f0; padding:10px 44px; font-size:13px; letter-spacing:.3px; border-bottom:1px solid #1e293b; }
 .ownerbar b { color:#fde68a; }
-section.doc { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:30px 40px; margin-bottom:30px; box-shadow:0 1px 4px rgba(15,23,42,.06); }
-.md-body h1 { font-size:30px; border-bottom:3px solid #e2e8f0; padding-bottom:12px; margin-top:6px; color:#0f172a; }
-.md-body h2 { font-size:23px; margin-top:36px; color:#1d4ed8; border-bottom:1px solid #eef2f7; padding-bottom:6px; }
-.md-body h3 { font-size:18px; margin-top:26px; color:#0f172a; }
-.md-body table { border-collapse:collapse; width:100%; margin:18px 0; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+
+section.doc { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:26px 34px; margin:26px 0 0; box-shadow:0 1px 4px rgba(15,23,42,.06); }
+.md-body { overflow-wrap:break-word; word-wrap:break-word; }
+.md-body h1 { font-size:clamp(24px,5vw,30px); border-bottom:3px solid #e2e8f0; padding-bottom:12px; margin-top:6px; color:#0f172a; line-height:1.25; }
+.md-body h2 { font-size:clamp(20px,4vw,23px); margin-top:34px; color:#1d4ed8; border-bottom:1px solid #eef2f7; padding-bottom:6px; line-height:1.3; }
+.md-body h3 { font-size:clamp(16px,3.5vw,18px); margin-top:24px; color:#0f172a; }
+.table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:18px 0; border-radius:8px; }
+.md-body table { border-collapse:collapse; width:100%; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
 .md-body th, .md-body td { border:1px solid #e2e8f0; padding:9px 12px; text-align:left; vertical-align:top; }
 .md-body thead th { background:#1d4ed8; color:#fff; font-weight:600; }
 .md-body tbody tr:nth-child(even) { background:#f8fafc; }
 .md-body tbody tr:hover { background:#eff6ff; }
-.md-body code { background:#eef2ff; color:#3730a3; padding:2px 6px; border-radius:5px; font-size:.88em; font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; }
-.md-body pre { background:#0f172a; color:#e2e8f0; padding:16px; border-radius:10px; overflow:auto; }
-.md-body pre code { background:none; color:inherit; padding:0; }
+.md-body code { background:#eef2ff; color:#3730a3; padding:2px 6px; border-radius:5px; font-size:.88em; font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; overflow-wrap:break-word; }
+.md-body pre { background:#0f172a; color:#e2e8f0; padding:16px; border-radius:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.md-body pre code { background:none; color:inherit; padding:0; white-space:pre; }
 .md-body blockquote { margin:16px 0; padding:12px 18px; background:#eff6ff; border-left:4px solid #3b82f6; border-radius:0 10px 10px 0; color:#334155; }
 .md-body hr { border:none; border-top:1px dashed #cbd5e1; margin:26px 0; }
-.md-body a { color:#2563eb; text-decoration:none; }
+.md-body a { color:#2563eb; text-decoration:none; overflow-wrap:break-word; }
 .md-body a:hover { text-decoration:underline; }
 .md-body ul, .md-body ol { padding-left:24px; }
 .md-body li { margin:3px 0; }
 .md-body strong { color:#0f172a; }
-#toTop { position:fixed; right:26px; bottom:26px; display:none; width:46px; height:46px; border:none; border-radius:50%; background:#1d4ed8; color:#fff; font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(29,78,216,.4); z-index:45; }
+.md-body img { max-width:100%; height:auto; }
+
+#toTop { position:fixed; right:20px; bottom:20px; display:none; width:48px; height:48px; border:none; border-radius:50%; background:#1d4ed8; color:#fff; font-size:22px; cursor:pointer; box-shadow:0 4px 12px rgba(29,78,216,.45); z-index:47; }
 #toTop:hover { background:#1e40af; }
-#menuToggle { display:none; position:fixed; top:12px; left:12px; z-index:60; width:44px; height:44px; border:none; border-radius:10px; background:#1d4ed8; color:#fff; font-size:20px; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.25); }
 footer { text-align:center; color:#64748b; font-size:13px; margin-top:26px; padding-top:18px; border-top:1px solid #e2e8f0; }
 footer .own { color:#1d4ed8; font-weight:700; }
+
+/* ------- Tablet ------- */
+@media (max-width: 1024px) {
+  main { padding:18px 28px 80px; }
+  .ownerbar { padding:10px 28px; }
+  section.doc { padding:24px 26px; }
+}
+
+/* ------- Mobile ------- */
 @media (max-width: 860px) {
-  #sidebar { transform:translateX(-100%); transition:transform .25s ease; }
+  #topbar { display:flex; }
+  #sidebar { transform:translateX(-100%); transition:transform .28s ease; width:84vw; max-width:330px; box-shadow:2px 0 18px rgba(0,0,0,.35); }
   #sidebar.open { transform:none; }
   main, .ownerbar { margin-left:0; }
-  main { padding:16px 18px 60px; }
-  .ownerbar { padding:10px 18px; }
-  section.doc { padding:22px 20px; }
-  #menuToggle { display:block; }
+  main { padding:16px 16px 70px; padding-top:calc(54px + env(safe-area-inset-top) + 10px); }
+  .ownerbar { display:none; }
+  section.doc { padding:18px 15px; border-radius:12px; margin-top:16px; }
+  .md-body th, .md-body td { padding:8px 10px; font-size:13px; }
+  #toTop { right:14px; bottom:14px; width:46px; height:46px; }
+  #sidebar li a { padding:14px 20px; font-size:15px; }
 }
+
+@media (max-width: 420px) {
+  main { padding-left:12px; padding-right:12px; }
+  section.doc { padding:16px 12px; }
+  .md-body ul, .md-body ol { padding-left:20px; }
+}
+
+/* ------- Print ------- */
 @media print {
-  #sidebar, #toTop, #menuToggle { display:none !important; }
+  #sidebar, #toTop, #topbar, #backdrop { display:none !important; }
   main, .ownerbar { margin:0; }
   main { max-width:none; padding:0; }
   .ownerbar { padding:6px 0; color:#000; background:#fff; border:none; }
@@ -67,7 +105,11 @@ footer .own { color:#1d4ed8; font-weight:700; }
 </style>
 </head>
 <body>
-<button id="menuToggle" aria-label="Toggle navigation">&#9776;</button>
+<header id="topbar">
+  <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">&#9776;</button>
+  <span class="topbar-title">AZ-900 Study Guide</span>
+</header>
+<div id="backdrop"></div>
 <nav id="sidebar">
   <div class="brand">AZ-900<small>COMPLETE STUDY GUIDE</small><span class="owner">👤 Sayandeep Adhikary</span></div>
   <ul>
@@ -80,12 +122,13 @@ footer .own { color:#1d4ed8; font-weight:700; }
       <li><a href="#m6"><span class="ico">📓</span>Module 6 — Governance &amp; Cost</a></li>
       <li><a href="#m7"><span class="ico">📔</span>Module 7 — Monitoring &amp; Mgmt</a></li>
       <li><a href="#advanced"><span class="ico">🧩</span>Advanced Scenario Questions</a></li>
-      <li><a href="#mock"><span class="ico">🧪</span>5 Full-Length Mock Exams</a></li>
+      <li><a href="#mock"><span class="ico">🧪</span>Mock Exams (Standard)</a></li>
+      <li><a href="#challenge"><span class="ico">🔥</span>Challenge Mock Exams (Harder)</a></li>
       <li><a href="#special"><span class="ico">🎲</span>Special Question Types</a></li>
       <li><a href="#revision"><span class="ico">🧠</span>Mnemonics &amp; Revision Sheet</a></li>
 
   </ul>
-  <div class="sidefoot">580+ practice questions &bull; 5 mock exams &bull; 80 advanced scenarios<br>Generated 2026-07-10<br>Tip: use Ctrl+F to search everything.<br><br>&copy; 2026 <strong>Sayandeep Adhikary</strong></div>
+  <div class="sidefoot">730+ practice questions &bull; 8 mock exams (5 standard + 3 challenge) &bull; 80 advanced scenarios<br>Generated 2026-07-13<br>Tip: use Ctrl+F (or your browser's Find) to search everything.<br><br>&copy; 2026 <strong>Sayandeep Adhikary</strong></div>
 </nav>
 <div class="ownerbar">📚 AZ-900 Microsoft Azure Fundamentals — Complete Study Guide &nbsp;|&nbsp; Prepared &amp; owned by <b>Sayandeep Adhikary</b></div>
 <main>
@@ -93,7 +136,7 @@ footer .own { color:#1d4ed8; font-weight:700; }
       <script type="text/markdown" data-target="md-overview">
 # 🎯 AZ-900: Microsoft Azure Fundamentals — Complete Exam Prep
 
-> A complete, exam-focused study pack with **580 practice questions**, **5 full-length mock exams**, **80 advanced scenario questions**, special question types, mnemonics, and a last-hour revision sheet.
+> A complete, exam-focused study pack with **730 practice questions**, **8 full-length mock exams** (5 standard + 3 challenge), **80 advanced scenario questions**, special question types, mnemonics, and a last-hour revision sheet.
 
 > **Prepared & owned by Sayandeep Adhikary.**
 
@@ -121,7 +164,8 @@ footer .own { color:#1d4ed8; font-weight:700; }
 | 7 | Monitoring & Management | 50 | [Module-7-Monitoring-Management.md](#m7) |
 | — | **Core Total** | **500** | |
 | � | Advanced Scenario & Critical-Thinking Questions | 80 | [Advanced-Scenario-Questions.md](#advanced) |
-| �🧪 | 5 Full-Length Mock Exams | 250 | [Mock-Exams.md](#mock) |
+| 🧪 | 5 Full-Length Mock Exams (Standard) | 250 | [Mock-Exams.md](#mock) |
+| 🔥 | Challenge Mock Exams (Harder) | 150 | [Challenge-Mock-Exams.md](#challenge) |
 | 🎲 | Special Question Types | — | [Special-Question-Types.md](#special) |
 | 🧠 | Mnemonics & Last-Hour Revision | — | [Revision-Mnemonics.md](#revision) |
 
@@ -9800,6 +9844,1082 @@ Good luck — you've got this! 🚀
 </script>
       <div class="md-body" id="md-mock"></div>
     </section>
+    <section id="challenge" class="doc">
+      <script type="text/markdown" data-target="md-challenge">
+# 🔥 Challenge Mock Exams (Harder) — 3 Exams × 50 = 150 Questions
+
+> **These are deliberately a notch above the real AZ-900.** Expect scenario stems, closer distractors, "choose two/three", and trap wording (NOT / EXCEPT / FALSE). **If you can consistently score 80%+ here, the real exam will feel easy.**
+
+**Format:** Answer keys with concise rationales are at the **end of each exam**. Time yourself: **50 questions / 45 minutes**, closed book.
+
+**Difficulty:** 🟠 Tricky · 🔴 Expert. Every question is one of these — none are "gimme" questions.
+
+---
+
+## 🔥 Challenge Exam A
+
+1. 🔴 A company must keep an application available even if an **entire Azure region** fails, with minimal data loss. Which **TWO** should they implement? (Choose two)
+   - A) An Availability Set
+   - B) Deploy the app to a second Azure region
+   - C) Geo-redundant storage (GRS/GZRS)
+   - D) A larger VM SKU
+   - E) A single Availability Zone
+
+2. 🟠 You must privately connect **three VNets in three different regions** with the **least administrative overhead** and **no VPN gateway**. What should you use?
+   - A) Site-to-site VPN between each pair
+   - B) Global VNet peering
+   - C) ExpressRoute for each VNet
+   - D) Public IPs with NSGs
+
+3. 🔴 An application chains **three Azure services**, each with a **99.9%** SLA. What is the approximate **composite SLA**?
+   - A) 99.9%
+   - B) ~99.7%
+   - C) 100%
+   - D) 299.7%
+
+4. 🟠 Which is **NOT** a responsibility of the customer when running a VM in **IaaS**?
+   - A) Patching the guest OS
+   - B) Securing the application
+   - C) Maintaining the physical host hardware
+   - D) Managing network security group rules
+
+5. 🔴 A workload has a **predictable 24/7 baseline** and you already own **Windows Server licenses**. Which **TWO** options minimize cost for the baseline? (Choose two)
+   - A) Spot VMs
+   - B) 3-year Reserved Instances
+   - C) Azure Hybrid Benefit
+   - D) Pay-as-you-go at peak size
+   - E) Dedicated Host
+
+6. 🟠 A nightly **batch job** can be interrupted and resumed, and you want the **lowest VM price**, accepting eviction. Which option fits?
+   - A) Reserved Instances
+   - B) Azure Spot Virtual Machines
+   - C) Azure Dedicated Host
+   - D) Pay-as-you-go
+
+7. 🔴 Security policy forbids **public IPs on VMs** and open management ports, yet admins need **RDP/SSH**. Which service satisfies this?
+   - A) Azure Front Door
+   - B) Azure Bastion
+   - C) A public load balancer
+   - D) Azure DNS
+
+8. 🟠 You must enforce, **org-wide across 40 subscriptions**, that resources can only be created in **West Europe**, with least effort. Where do you assign the policy?
+   - A) On each resource group
+   - B) On a management group parenting all subscriptions
+   - C) On one subscription
+   - D) On each VM
+
+9. 🔴 A resource group was accidentally deleted last quarter. You must **prevent deletion** of a critical resource group but still **allow configuration changes** inside it. What do you apply?
+   - A) A ReadOnly lock
+   - B) A CanNotDelete lock
+   - C) An Azure Policy Deny-all effect
+   - D) Remove all RBAC
+
+10. 🟠 Which single service provides **global Layer-7 HTTP routing** to the nearest healthy region **with a built-in WAF**?
+    - A) Azure Load Balancer
+    - B) Azure Traffic Manager
+    - C) Azure Front Door
+    - D) Azure Application Gateway (regional)
+
+11. 🔴 Storage must **survive a full regional disaster** AND allow the app to **read the secondary region while the primary is healthy**. What is the **minimum** SKU?
+    - A) GRS
+    - B) RA-GRS
+    - C) ZRS
+    - D) LRS
+
+12. 🟠 Which **TWO** are serverless Azure services? (Choose two)
+    - A) Azure Virtual Machines
+    - B) Azure Functions
+    - C) Azure Logic Apps
+    - D) Azure Kubernetes Service
+    - E) Availability Sets
+
+13. 🔴 A file-processing function must run **only when a blob is uploaded**, scale to zero when idle, and bill per execution. Which is BEST?
+    - A) An always-on VM polling storage
+    - B) A Blob-triggered Azure Function
+    - C) A 24/7 AKS cluster
+    - D) Azure Virtual Desktop
+
+14. 🟠 Which statement about the **Archive** storage tier is **TRUE**?
+    - A) It provides instant read access
+    - B) It is the most expensive tier to store data
+    - C) Data must be rehydrated (hours) before it can be read
+    - D) It replicates automatically across regions
+
+15. 🔴 Which **TWO** are always the customer's responsibility across **all** cloud service models? (Choose two)
+    - A) Physical datacenter security
+    - B) Data
+    - C) Identities and accounts
+    - D) The hypervisor
+    - E) The physical network
+
+16. 🟠 A globally distributed database needs **single-digit-millisecond latency** with **multi-region writes**. Which service fits?
+    - A) Azure SQL Database (single region)
+    - B) Azure Cosmos DB
+    - C) Azure Table Storage
+    - D) Azure Files
+
+17. 🔴 Which statement about **Availability Zones vs. Availability Sets** is correct?
+    - A) Both protect against a full region outage
+    - B) Zones span datacenters (99.99%); Sets protect racks within one datacenter (99.95%)
+    - C) Sets protect against datacenter loss; Zones protect racks
+    - D) They are identical
+
+18. 🟠 A company must run **microservices in containers** with **self-healing, rolling updates, and autoscaling** at scale. Which service?
+    - A) Azure Container Instances
+    - B) Azure Kubernetes Service
+    - C) A single VM with Docker
+    - D) Azure Logic Apps
+
+19. 🔴 Which is **TRUE** about **Azure region pairs**?
+    - A) Both regions update simultaneously
+    - B) They may be in different geographies for maximum distance
+    - C) Planned platform updates roll out to one region at a time, and both stay in the same geography
+    - D) They eliminate the need for backups
+
+20. 🟠 An app on a VM must read secrets from **Key Vault** with **no credentials stored in code**. What should you use?
+    - A) A hardcoded key
+    - B) A managed identity
+    - C) A SAS token in the repo
+    - D) A shared admin password
+
+21. 🔴 Which **TWO** tools help you understand costs? Match each purpose. (Choose two that are correctly paired)
+    - A) Pricing Calculator — estimate a NEW deployment
+    - B) TCO Calculator — analyze CURRENT Azure spend
+    - C) TCO Calculator — compare on-premises vs Azure
+    - D) Cost Management — estimate future services before deploying
+    - E) Pricing Calculator — compare on-prem vs Azure
+
+22. 🟠 A budget in Cost Management hits its 100% threshold. By default, what happens?
+    - A) All resources shut down automatically
+    - B) An alert is sent; resources keep running
+    - C) The subscription is deleted
+    - D) New deployments are blocked automatically
+
+23. 🔴 Which capability enforces "**require MFA only for risky sign-ins or untrusted locations**"?
+    - A) Global MFA for all users
+    - B) Conditional Access
+    - C) Single sign-on
+    - D) A network security group
+
+24. 🟠 Which built-in RBAC role can **manage resources** but **cannot grant access** to others?
+    - A) Owner
+    - B) Contributor
+    - C) Reader
+    - D) User Access Administrator
+
+25. 🔴 A SOC needs to **collect logs enterprise-wide, detect threats with analytics, and automate response**. Which service?
+    - A) Microsoft Defender for Cloud
+    - B) Microsoft Sentinel
+    - C) Azure Advisor
+    - D) Azure Monitor Metrics
+
+26. 🟠 Which service provides a **Secure Score** and posture recommendations across Azure **and AWS**?
+    - A) Microsoft Sentinel
+    - B) Microsoft Defender for Cloud
+    - C) Azure Key Vault
+    - D) Azure Policy
+
+27. 🔴 Which statement is **FALSE**?
+    - A) ExpressRoute uses a private, dedicated connection
+    - B) VPN Gateway encrypts traffic over the public internet
+    - C) ExpressRoute traffic travels over the public internet
+    - D) VNet peering keeps traffic on the Microsoft backbone
+
+28. 🟠 To investigate **failed sign-ins over the last 24 hours** across resources using a rich query language, you use:
+    - A) Metrics Explorer
+    - B) Log Analytics with KQL
+    - C) The Pricing Calculator
+    - D) Resource locks
+
+29. 🔴 Which tool tells you whether **one specific VM** is unhealthy due to a **platform** issue vs. your own config?
+    - A) Azure Status (global)
+    - B) Azure Service Health (personalized)
+    - C) Azure Resource Health
+    - D) Azure Advisor
+
+30. 🟠 Which **TWO** correctly describe **tags**? (Choose two)
+    - A) They are name/value metadata used for cost allocation
+    - B) They are inherited by child resources by default
+    - C) They can be enforced via Azure Policy
+    - D) They prevent resource deletion
+    - E) They encrypt resources
+
+31. 🔴 A company keeps patient records **on-premises** (legal), runs its website in **Azure**, and uses **AWS** for ML. This environment is BEST described as:
+    - A) Purely hybrid
+    - B) Purely multi-cloud
+    - C) Both hybrid and multi-cloud
+    - D) Community cloud
+
+32. 🟠 Which is the correct **failure-scope → resilience** mapping?
+    - A) Rack failure → region pair
+    - B) Rack failure → Availability Set; Datacenter failure → Availability Zones; Region loss → multi-region
+    - C) Datacenter failure → Availability Set
+    - D) Region loss → Availability Zones
+
+33. 🔴 Which is **TRUE** about the consumption model and reservations?
+    - A) Reservations contradict the consumption model
+    - B) Reservations are a commitment-based discount that coexists with pay-as-you-go; both are OpEx
+    - C) Reservations convert spending to CapEx/on-premises
+    - D) Reservations remove all billing
+
+34. 🟠 A three-tier app must route `/api` and `/images` to **different backend pools** with **TLS termination** and a **WAF**, within a single region. Which service?
+    - A) Azure Load Balancer (L4)
+    - B) Azure Application Gateway (L7 + WAF)
+    - C) Azure Traffic Manager
+    - D) A network security group
+
+35. 🔴 Which **THREE** are guiding principles of **Zero Trust**? (Choose three)
+    - A) Verify explicitly
+    - B) Trust the internal network
+    - C) Use least-privilege access
+    - D) Assume breach
+    - E) Disable MFA for speed
+
+36. 🟠 A VNet-hosted app must reach an **Azure Storage account privately**, keeping traffic on the **Microsoft backbone**. What do you configure?
+    - A) A public IP on the storage account
+    - B) A Private Endpoint (Private Link)
+    - C) Azure DNS only
+    - D) A site-to-site VPN
+
+37. 🔴 Which statement about **MFA** is **FALSE**?
+    - A) It requires two or more different factor types
+    - B) A 20-character password alone satisfies MFA
+    - C) It can use the Microsoft Authenticator app
+    - D) It significantly reduces account compromise
+
+38. 🟠 Which is the correct storage **durability order**, lowest → highest?
+    - A) GRS < LRS < ZRS < GZRS
+    - B) LRS < ZRS < GRS < GZRS
+    - C) ZRS < LRS < GRS < GZRS
+    - D) GZRS < GRS < ZRS < LRS
+
+39. 🔴 A company must ensure **every new resource carries a `CostCenter` tag** and **reject** deployments that lack it. Which tool + effect?
+    - A) A resource lock
+    - B) Azure Policy with a Deny/Require-tag effect
+    - C) A budget alert
+    - D) Azure Advisor
+
+40. 🟠 Which service extends **Azure Policy, RBAC, and Monitor** to **on-premises servers and AWS VMs** as if they were native Azure resources?
+    - A) Azure Bastion
+    - B) Azure Arc
+    - C) Azure Migrate
+    - D) Azure Front Door
+
+41. 🔴 Which is **TRUE** about **RBAC vs. Azure Policy**?
+    - A) RBAC controls what properties resources may have
+    - B) RBAC controls who can do actions; Policy controls what resources can be
+    - C) Policy authenticates users
+    - D) They are interchangeable
+
+42. 🟠 A remote employee must connect a **single laptop** securely to an Azure VNet. Which connection type?
+    - A) Site-to-site VPN
+    - B) Point-to-site VPN
+    - C) ExpressRoute
+    - D) VNet peering
+
+43. 🔴 Which **TWO** achieve a **99.99%** VM availability SLA and survive a **datacenter** failure? (Choose two)
+    - A) A single VM with Premium SSD
+    - B) VMs spread across Availability Zones
+    - C) Zone-redundant deployment of the workload
+    - D) A single Availability Set
+    - E) A larger VM SKU
+
+44. 🟠 Which describes **elasticity** (as opposed to plain scalability)?
+    - A) Manually resizing a VM weekly
+    - B) Automatically adding/removing capacity in response to demand
+    - C) Buying servers for peak load
+    - D) Never changing capacity
+
+45. 🔴 Which statement about **serverless** is correct?
+    - A) There are literally no servers, so nothing to secure
+    - B) The provider manages servers; you remain responsible for code, data, identities, and access
+    - C) It runs entirely on the client device
+    - D) It removes the customer's data responsibility
+
+46. 🟠 Which service provides **managed file shares** accessible via **SMB/NFS**, mountable by both cloud and on-prem systems?
+    - A) Azure Blob Storage
+    - B) Azure Files
+    - C) Azure Queue Storage
+    - D) Azure Table Storage
+
+47. 🔴 Which is **TRUE** about **Azure Status vs. Service Health**?
+    - A) Azure Status is personalized; Service Health is global
+    - B) Azure Status is the global public page; Service Health is personalized to your subscriptions
+    - C) They are identical
+    - D) Both only cover on-premises
+
+48. 🟠 Which **TWO** are benefits of PaaS over IaaS? (Choose two)
+    - A) Azure handles OS patching
+    - B) You must maintain physical servers
+    - C) Azure handles platform load balancing and scaling
+    - D) You get full kernel-level driver control
+    - E) You lose the ability to deploy custom code
+
+49. 🔴 A preview Azure feature is being considered for **production**. Which is the key limitation?
+    - A) Preview features are more reliable than GA
+    - B) Preview features may change and generally lack a financially backed SLA
+    - C) Preview features are free forever
+    - D) Preview features are identical to GA
+
+50. 🟠 Which correctly orders **customer responsibility** from MOST to LEAST?
+    - A) SaaS → PaaS → IaaS
+    - B) IaaS → PaaS → SaaS
+    - C) PaaS → IaaS → SaaS
+    - D) IaaS → SaaS → PaaS
+
+---
+
+### ✅ Challenge Exam A — Answer Key
+
+| # | Ans | Rationale | # | Ans | Rationale |
+|---|-----|-----------|---|-----|-----------|
+| 1 | B, C | Second region + geo-redundant storage survive region loss | 26 | B | Defender for Cloud = Secure Score, multi-cloud |
+| 2 | B | Global VNet peering = private, cross-region, no gateway | 27 | C | FALSE: ExpressRoute is private, NOT internet |
+| 3 | B | 0.999³ ≈ 0.997 (99.7%) | 28 | B | Log Analytics + KQL for log queries |
+| 4 | C | Physical host is always Microsoft's | 29 | C | Resource Health = one specific resource |
+| 5 | B, C | Reservations + Hybrid Benefit for steady baseline | 30 | A, C | Tags = metadata; enforceable via Policy (not inherited by default) |
+| 6 | B | Spot = cheapest, interruptible | 31 | C | On-prem + Azure = hybrid; +AWS = multi-cloud |
+| 7 | B | Bastion = RDP/SSH, no public IP | 32 | B | Rack→Set, DC→Zone, Region→multi-region |
+| 8 | B | Management group = inherit to all subs | 33 | B | Reservations coexist with consumption; still OpEx |
+| 9 | B | CanNotDelete = block delete, allow changes | 34 | B | App Gateway = L7 URL routing + WAF |
+| 10 | C | Front Door = global L7 + WAF | 35 | A, C, D | Verify explicitly, least privilege, assume breach |
+| 11 | B | RA-GRS = region DR + secondary read | 36 | B | Private Endpoint keeps traffic on backbone |
+| 12 | B, C | Functions + Logic Apps = serverless | 37 | B | FALSE: one password ≠ MFA |
+| 13 | B | Blob-triggered Function = event-driven | 38 | B | LRS<ZRS<GRS<GZRS |
+| 14 | C | Archive requires rehydration (hours) | 39 | B | Policy Deny/Require tag |
+| 15 | B, C | Data + identities always customer | 40 | B | Azure Arc = hybrid/multi-cloud governance |
+| 16 | B | Cosmos DB = global low-latency multi-write | 41 | B | RBAC=who, Policy=what |
+| 17 | B | Zones=99.99% across DCs; Sets=99.95% within DC | 42 | B | Point-to-site = one device |
+| 18 | B | AKS = orchestration at scale | 43 | B, C | Availability Zones deliver 99.99% |
+| 19 | C | Sequential updates + same geography | 44 | B | Elasticity = auto add/remove by demand |
+| 20 | B | Managed identity = no stored secrets | 45 | B | Servers exist; you own code/data/identity |
+| 21 | A, C | Pricing=new estimate; TCO=on-prem vs Azure | 46 | B | Azure Files = SMB/NFS shares |
+| 22 | B | Budgets alert, don't auto-stop | 47 | B | Status=global; Service Health=personalized |
+| 23 | B | Conditional Access = adaptive MFA | 48 | A, C | PaaS: Azure patches OS + scales platform |
+| 24 | B | Contributor manages, can't grant access | 49 | B | Preview: may change, no SLA |
+| 25 | B | Sentinel = SIEM/SOAR | 50 | B | IaaS → PaaS → SaaS |
+
+**Score: ___ / 55 points** *(choose-two/three questions have multiple correct answers — count each fully-correct question as 1)*
+
+**Target: 45/50 questions correct.**
+
+---
+
+## 🔥 Challenge Exam B
+
+1. 🔴 A company runs **Azure SQL Database** (PaaS) and **SQL Server on an Azure VM** (IaaS). An OS-level vulnerability is announced. For which system must the **customer** apply the OS patch?
+   - A) Both
+   - B) Only the SQL Server on the VM
+   - C) Only Azure SQL Database
+   - D) Neither
+
+2. 🟠 A startup needs **no upfront cost**, the ability to **stop paying when a resource is deleted**, and **no long-term commitment**. Which pricing approach fits?
+   - A) 3-year Reservations
+   - B) Pay-as-you-go (consumption)
+   - C) Dedicated Host
+   - D) Buying on-premises servers
+
+3. 🔴 Which **TWO** statements about **Availability Zones** are TRUE? (Choose two)
+   - A) They are physically separate locations within a region
+   - B) They protect against a full region outage
+   - C) Each has independent power, cooling, and networking
+   - D) They span multiple geographies
+   - E) They are a billing boundary
+
+4. 🟠 A company must **estimate the monthly cost of a NEW architecture** before deploying. Which tool?
+   - A) Azure Cost Management
+   - B) Azure Pricing Calculator
+   - C) TCO Calculator
+   - D) Azure Advisor
+
+5. 🔴 To justify migration, leadership wants a **cost comparison of on-premises vs. Azure**. Which tool?
+   - A) Pricing Calculator
+   - B) TCO Calculator
+   - C) Cost Management
+   - D) Resource locks
+
+6. 🟠 Which is the correct top-to-bottom **management hierarchy**?
+   - A) Subscription → Management group → Resource group → Resource
+   - B) Management group → Subscription → Resource group → Resource
+   - C) Resource → Resource group → Subscription → Management group
+   - D) Resource group → Subscription → Management group → Resource
+
+7. 🔴 Governance applied at a **management group** and RBAC applied at a **subscription** both affect a resource in a child resource group. Which is TRUE?
+   - A) Neither applies
+   - B) Both inherit downward to the resource
+   - C) Only RBAC inherits
+   - D) Only Policy inherits
+
+8. 🟠 Which **TWO** are examples of PaaS? (Choose two)
+   - A) Azure Virtual Machines
+   - B) Azure App Service
+   - C) Azure SQL Database
+   - D) Microsoft 365
+   - E) Azure Virtual Network
+
+9. 🔴 A workload must survive a **datacenter failure within a region** but does **not** need cross-region replication, at the **lowest cost** meeting that bar. Which storage redundancy?
+   - A) LRS
+   - B) ZRS
+   - C) GRS
+   - D) RA-GZRS
+
+10. 🟠 Which blob type is optimized for **append operations** such as logging?
+    - A) Block blob
+    - B) Page blob
+    - C) Append blob
+    - D) Archive blob
+
+11. 🔴 A workload has a **predictable baseline** plus **unpredictable spikes**. Which combination is MOST cost-optimal?
+    - A) Pay-as-you-go for everything
+    - B) Reservations for the baseline + autoscale/pay-as-you-go for spikes
+    - C) Spot for the entire workload
+    - D) One reserved VM sized for peak, running 24/7
+
+12. 🟠 Which **THREE** factors affect the cost of an Azure resource? (Choose three)
+    - A) Resource type
+    - B) Region
+    - C) Outbound (egress) data transfer
+    - D) The administrator's name
+    - E) The color of the portal theme
+
+13. 🔴 Which is **TRUE** about **inbound vs. outbound** data transfer pricing?
+    - A) Inbound is usually free; outbound is often charged
+    - B) Inbound is charged; outbound is free
+    - C) Both are always free
+    - D) Only inbound is charged
+
+14. 🟠 A company needs **just-in-time** privileged access with **approval workflows** and **time limits** to reduce standing admin rights. Which capability?
+    - A) Single sign-on
+    - B) Microsoft Entra Privileged Identity Management (PIM)
+    - C) A resource lock
+    - D) A managed identity
+
+15. 🔴 External **business partners** must access shared resources using **their own corporate credentials**, with no internal accounts created for them. Which capability?
+    - A) Microsoft Entra B2B
+    - B) Microsoft Entra B2C
+    - C) A service principal per partner
+    - D) A shared guest password
+
+16. 🟠 **Consumers** must sign in to your customer-facing app using **Google/Facebook or a local account**. Which capability?
+    - A) Microsoft Entra B2B
+    - B) Microsoft Entra External ID / B2C
+    - C) PIM
+    - D) Azure Bastion
+
+17. 🔴 Which statement is **FALSE** about resource locks?
+    - A) CanNotDelete prevents deletion but allows changes
+    - B) ReadOnly prevents modification and deletion
+    - C) Locks reduce the cost of the resource
+    - D) Locks protect against accidental changes
+
+18. 🟠 Which service provides **personalized recommendations** across **Cost, Security, Reliability, Operational Excellence, and Performance**?
+    - A) Azure Advisor
+    - B) Azure Monitor
+    - C) Azure DNS
+    - D) Azure Key Vault
+
+19. 🔴 A three-tier app needs **DNS-based** global routing using a **performance** method, with **no WAF or TLS termination** required. Which service?
+    - A) Azure Front Door
+    - B) Azure Traffic Manager
+    - C) Azure Application Gateway
+    - D) Azure Load Balancer
+
+20. 🟠 Which service distributes **TCP/UDP** traffic across backend VMs at **Layer 4**?
+    - A) Azure Application Gateway
+    - B) Azure Load Balancer
+    - C) Azure Front Door
+    - D) Azure DNS
+
+21. 🔴 A security team wants **centralized, stateful filtering with threat intelligence** across many VNets in a hub-and-spoke design. Which service (beyond NSGs)?
+    - A) Azure Firewall
+    - B) NSGs only
+    - C) Azure DNS
+    - D) Azure Bastion
+
+22. 🟠 Which is **TRUE** about **NSGs**?
+    - A) They provide centralized threat intelligence
+    - B) They are basic allow/deny rules evaluated by priority at subnet/NIC level
+    - C) They only work on-premises
+    - D) They cost more than Azure Firewall
+
+23. 🔴 A media company stores **10-year archival video** almost never accessed, tolerating hours of retrieval delay, at **lowest cost**. Which tier?
+    - A) Hot
+    - B) Cool
+    - C) Archive
+    - D) Premium
+
+24. 🟠 Which feature **automatically moves blobs to cooler tiers as they age** and **deletes** them after a retention period?
+    - A) Lifecycle management policies
+    - B) Network security groups
+    - C) Availability Zones
+    - D) Azure Advisor
+
+25. 🔴 Which **TWO** describe **Azure Functions** on the Consumption plan? (Choose two)
+    - A) It scales automatically, including to zero
+    - B) You must patch the underlying servers
+    - C) You are billed per execution
+    - D) It requires a 3-year commitment
+    - E) It requires Kubernetes
+
+26. 🟠 A legacy multi-tier app must move to Azure **as-is** with **full OS control** and minimal changes. Which model?
+    - A) Azure Functions
+    - B) Azure Virtual Machines (IaaS)
+    - C) Microsoft 365
+    - D) Azure Logic Apps
+
+27. 🔴 Which is **TRUE** about **encryption at rest vs. in transit**?
+    - A) At rest protects data moving over networks; in transit protects stored data
+    - B) At rest protects stored data on disk; in transit protects data moving over networks (TLS/HTTPS)
+    - C) Both mean the same thing
+    - D) Neither is used in Azure
+
+28. 🟠 Which service securely stores **secrets, keys, and certificates** with access policies and auditing?
+    - A) Azure Key Vault
+    - B) Azure Blob Storage
+    - C) Azure DNS
+    - D) Azure Bastion
+
+29. 🔴 An alert must fire when **VM CPU exceeds 90%** and trigger an **automated remediation Function**. Which combination?
+    - A) Azure Policy with a Deny effect
+    - B) Azure Monitor metric alert + action group invoking a Function
+    - C) A resource lock
+    - D) Azure DNS
+
+30. 🟠 Which describes **Application Insights**?
+    - A) It manages DNS records
+    - B) It monitors application performance — requests, dependencies, exceptions
+    - C) It is a storage redundancy option
+    - D) It replaces Microsoft Entra ID
+
+31. 🔴 Which **THREE** are valid **Azure Advisor** categories? (Choose three)
+    - A) Cost
+    - B) Security
+    - C) Reliability
+    - D) Billing
+    - E) Marketing
+
+32. 🟠 A company must keep EU customer data **within the EU** for GDPR while still having **cross-region DR**. What supports this?
+    - A) GRS pairing to a US region
+    - B) Deploying in an EU region and using region pairs, which stay in the same geography
+    - C) LRS in the US
+    - D) Data residency cannot be guaranteed
+
+33. 🔴 Which is the correct **physical hierarchy**, largest → smallest?
+    - A) Datacenter → Region → Geography
+    - B) Geography → Region → Availability Zone → Datacenter
+    - C) Region → Geography → Datacenter
+    - D) Availability Zone → Region → Geography
+
+34. 🟠 A resource group in **East US** contains a VM in **West Europe**. Which is TRUE?
+    - A) Invalid — all resources must match the RG region
+    - B) Valid — resources can span regions; the RG region only stores metadata
+    - C) Valid — the VM auto-moves to East US
+    - D) Invalid — RGs can't span services
+
+35. 🔴 Which **TWO** would you use to reduce cost for a **steady, always-on** production database? (Choose two)
+    - A) Reserved capacity (1 or 3 years)
+    - B) Spot instances
+    - C) Azure Hybrid Benefit (if eligible licenses)
+    - D) Increasing egress traffic
+    - E) Over-provisioning for peak
+
+36. 🟠 Which single term describes automatically **adding and removing** resources to match demand in near real time?
+    - A) Scalability
+    - B) Elasticity
+    - C) High availability
+    - D) Disaster recovery
+
+37. 🔴 Which is **TRUE** about ARM/Bicep template deployments?
+    - A) Deploying the same template repeatedly creates duplicates
+    - B) They are idempotent — repeat deployments converge to the same end state
+    - C) Templates can only deploy once
+    - D) They cannot be automated
+
+38. 🟠 Which service runs a **single, short-lived container** quickly with **per-second billing** and no cluster to manage?
+    - A) Azure Kubernetes Service
+    - B) Azure Container Instances
+    - C) A VM Scale Set
+    - D) Azure Virtual Desktop
+
+39. 🔴 Which is the correct distinction for **point-to-site vs. site-to-site VPN**?
+    - A) Point-to-site connects an entire network; site-to-site connects one device
+    - B) Point-to-site connects one device; site-to-site connects an entire on-prem network
+    - C) Both connect entire networks
+    - D) Both connect single devices
+
+40. 🟠 Which **TWO** are always the cloud **provider's** responsibility, regardless of service model? (Choose two)
+    - A) Physical datacenter security
+    - B) Customer data
+    - C) The physical network
+    - D) Customer identities
+    - E) Customer devices
+
+41. 🔴 A company wants **90 TB** moved to Azure with **limited bandwidth** and a deadline. Which approach?
+    - A) AzCopy over the internet
+    - B) Azure Data Box (offline)
+    - C) Email in chunks
+    - D) Azure DNS
+
+42. 🟠 Which tool is BEST to **script automated uploads** of build artifacts to Blob Storage in a CI/CD pipeline?
+    - A) Azure Storage Explorer (GUI)
+    - B) AzCopy (CLI)
+    - C) Azure Data Box
+    - D) Azure Portal
+
+43. 🔴 Which is **TRUE** about **SLAs**?
+    - A) A higher percentage means more allowed downtime
+    - B) A higher percentage means less allowed downtime
+    - C) Free/preview services always have SLAs
+    - D) SLAs guarantee literal zero downtime
+
+44. 🟠 Which capability lets a VM authenticate to Azure services **without any stored credentials**?
+    - A) A hardcoded key
+    - B) A managed identity
+    - C) A public SAS token
+    - D) A shared admin account
+
+45. 🔴 Which describes the Zero Trust principle **"assume breach"**?
+    - A) Trust all internal traffic
+    - B) Segment access, minimize blast radius, encrypt, and continuously verify as if attackers are inside
+    - C) Disable logging
+    - D) Grant broad standing access
+
+46. 🟠 Which service delivers **cloud-hosted Windows desktops** (DaaS) to remote users?
+    - A) Azure Virtual Desktop
+    - B) Azure Functions
+    - C) Azure Files
+    - D) Azure DNS
+
+47. 🔴 Which is **FALSE**?
+    - A) In IaaS the customer patches the guest OS
+    - B) In PaaS the provider patches the OS
+    - C) In SaaS the customer patches the OS
+    - D) Data is always the customer's responsibility
+
+48. 🟠 A company must grant a partner **temporary, read-only** access to **one blob container** for 7 days **without sharing account keys**. What should they use?
+    - A) The storage account access key
+    - B) A scoped, time-limited SAS token
+    - C) Making the container public
+    - D) Subscription Owner RBAC
+
+49. 🔴 Which **TWO** are true about **hybrid identity**? (Choose two)
+    - A) It integrates on-premises AD with Microsoft Entra ID
+    - B) Microsoft Entra Connect synchronizes identities
+    - C) It requires abandoning on-premises AD
+    - D) It only uses cloud identities
+    - E) It removes the need for authentication
+
+50. 🟠 Which management scope should you use to apply **one policy** consistently to **many subscriptions** with least effort?
+    - A) Each resource individually
+    - B) A management group
+    - C) One subscription only
+    - D) Each VM
+
+---
+
+### ✅ Challenge Exam B — Answer Key
+
+| # | Ans | Rationale | # | Ans | Rationale |
+|---|-----|-----------|---|-----|-----------|
+| 1 | B | IaaS: customer patches OS; PaaS: Microsoft does | 26 | B | VMs = lift-and-shift, OS control |
+| 2 | B | Pay-as-you-go = flexible, no commitment | 27 | B | At rest=disk; in transit=TLS |
+| 3 | A, C | Zones: separate locations, independent utilities | 28 | A | Key Vault = secrets/keys/certs |
+| 4 | B | Pricing Calculator = new estimate | 29 | B | Monitor alert + action group Function |
+| 5 | B | TCO = on-prem vs Azure | 30 | B | App Insights = APM |
+| 6 | B | MG → Sub → RG → Resource | 31 | A, B, C | Advisor: Cost, Security, Reliability (+Perf, OpEx) |
+| 7 | B | Policy + RBAC both inherit downward | 32 | B | Region pairs stay in same geography |
+| 8 | B, C | App Service + Azure SQL DB = PaaS | 33 | B | Geography→Region→AZ→Datacenter |
+| 9 | B | ZRS = zone protection, no cross-region cost | 34 | B | RG region = metadata only |
+| 10 | C | Append blob = logging | 35 | A, C | Reservations + Hybrid Benefit |
+| 11 | B | Reserve baseline, flex the spikes | 36 | B | Elasticity = auto add/remove |
+| 12 | A, B, C | Type, region, egress affect cost | 37 | B | IaC = idempotent |
+| 13 | A | Ingress free, egress charged | 38 | B | ACI = single container, per-second |
+| 14 | B | PIM = just-in-time admin | 39 | B | P2S=device, S2S=network |
+| 15 | A | B2B = partners, own identity | 40 | A, C | Physical datacenter + network = provider |
+| 16 | B | B2C = consumer/social sign-in | 41 | B | Data Box = offline bulk transfer |
+| 17 | C | FALSE: locks don't reduce cost | 42 | B | AzCopy = scriptable CLI |
+| 18 | A | Advisor = 5-category recommendations | 43 | B | More 9's = less downtime |
+| 19 | B | Traffic Manager = DNS performance routing | 44 | B | Managed identity = no secrets |
+| 20 | B | Load Balancer = L4 TCP/UDP | 45 | B | Assume breach = segment/minimize blast radius |
+| 21 | A | Azure Firewall = centralized + threat intel | 46 | A | AVD = cloud desktops |
+| 22 | B | NSG = priority-ordered allow/deny | 47 | C | FALSE: SaaS provider patches OS |
+| 23 | C | Archive = cheapest, rehydrate hours | 48 | B | SAS = scoped, time-limited access |
+| 24 | A | Lifecycle policy = auto-tier/delete | 49 | A, B | Hybrid identity: AD + Entra via Entra Connect |
+| 25 | A, C | Consumption Functions: scale-to-zero, per-exec | 50 | B | Management group scope |
+
+**Score: ___ / 50** &nbsp; **Target: 45/50 correct.**
+
+---
+
+## 🔥 Challenge Exam C (Expert)
+
+1. 🔴 An application must continue running **with no perceptible downtime if a single component fails**. Which concept BEST describes this requirement?
+   - A) Disaster recovery
+   - B) Fault tolerance
+   - C) Scalability
+   - D) Consumption-based pricing
+
+2. 🔴 A company needs to recover its systems **after an entire region is lost**, accepting a short recovery window. Which concept applies?
+   - A) High availability
+   - B) Disaster recovery
+   - C) Elasticity
+   - D) Fault tolerance
+
+3. 🟠 Which **TWO** correctly pair a service model with an example? (Choose two)
+   - A) IaaS — Azure Virtual Machines
+   - B) SaaS — Azure Virtual Network
+   - C) PaaS — Azure App Service
+   - D) IaaS — Microsoft 365
+   - E) SaaS — Azure Kubernetes Service
+
+4. 🔴 Moving from an owned datacenter to Azure BEST represents which shift?
+   - A) OpEx → CapEx
+   - B) CapEx → OpEx
+   - C) OpEx → no cost
+   - D) CapEx → fixed lifetime fee
+
+5. 🟠 Which is **NOT** part of the Azure **physical** infrastructure hierarchy?
+   - A) Region
+   - B) Availability Zone
+   - C) Resource group
+   - D) Datacenter
+
+6. 🔴 A mission-critical VM workload requires a **99.99%** SLA. Which deployment qualifies?
+   - A) A single VM with Premium SSD
+   - B) A single VM with Standard HDD
+   - C) Two or more VMs across Availability Zones
+   - D) A stopped VM
+
+7. 🟠 Which is **TRUE** about **management groups**?
+   - A) They cannot be nested
+   - B) They can be nested and are used to govern multiple subscriptions
+   - C) They contain resources directly
+   - D) They replace resource groups
+
+8. 🔴 Which is **FALSE** about **Azure Resource Manager (ARM)**?
+   - A) All management tools route through ARM
+   - B) ARM supports declarative templates
+   - C) ARM only works with the Azure Portal
+   - D) ARM enables RBAC and tagging
+
+9. 🟠 A company must connect its **entire on-premises network** to Azure over an **encrypted tunnel across the public internet** at lower cost. Which service?
+   - A) ExpressRoute
+   - B) Site-to-site VPN
+   - C) Point-to-site VPN
+   - D) VNet peering
+
+10. 🔴 A company needs the **highest-reliability, private, high-bandwidth** link to Azure that **never uses the public internet**; cost is secondary. Which service?
+    - A) Site-to-site VPN
+    - B) Point-to-site VPN
+    - C) ExpressRoute
+    - D) VNet peering
+
+11. 🟠 Which **TWO** protect against **rack/hardware failure and planned maintenance reboots** within a single datacenter? (Choose two — the mechanisms an Availability Set uses)
+    - A) Fault domains
+    - B) Update domains
+    - C) Region pairs
+    - D) Geographies
+    - E) Read-access geo-replication
+
+12. 🔴 Which redundancy provides the **highest durability**, protecting against both zone and regional failures **with** secondary read access?
+    - A) LRS
+    - B) ZRS
+    - C) GRS
+    - D) RA-GZRS
+
+13. 🟠 Which is **TRUE** about the **Hot vs. Cool vs. Archive** tiers?
+    - A) Storage cost: Hot > Cool > Archive
+    - B) Access cost: Hot > Cool > Archive
+    - C) Archive gives instant reads
+    - D) Cool is the most expensive to store
+
+14. 🔴 A globally distributed app must route users to the **closest healthy region over HTTP** with **WAF**, while a separate internal app needs **URL path-based routing + WAF within one region**. Which pair is correct?
+    - A) Front Door (global) + Application Gateway (regional)
+    - B) Traffic Manager (global) + Load Balancer (regional)
+    - C) Application Gateway (global) + Front Door (regional)
+    - D) Load Balancer (global) + NSG (regional)
+
+15. 🟠 Which is **TRUE** about **DDoS Protection**?
+    - A) The Basic tier is free and automatically enabled for all Azure resources
+    - B) It must be purchased per resource
+    - C) It only protects on-premises servers
+    - D) It replaces the need for any firewall
+
+16. 🔴 Which **TWO** statements about **Azure Bastion** are TRUE? (Choose two)
+    - A) It provides RDP/SSH without exposing a public IP on the VM
+    - B) It requires opening port 3389 to the internet
+    - C) It connects over TLS through the portal
+    - D) It is a storage redundancy option
+    - E) It replaces Microsoft Entra ID
+
+17. 🟠 Which service provides **managed Kubernetes**, handling the control plane for you?
+    - A) Azure Container Instances
+    - B) Azure Kubernetes Service
+    - C) Azure Functions
+    - D) Azure App Service
+
+18. 🔴 A retailer needs a **fleet of identical VMs** that **autoscale out during peaks and in at night**, behind a load balancer. Which feature?
+    - A) A single large VM
+    - B) An Availability Set alone
+    - C) Virtual Machine Scale Sets with autoscale
+    - D) Azure Functions
+
+19. 🟠 Which is **TRUE** about **containers vs. VMs**?
+    - A) Containers each bundle a full guest OS
+    - B) Containers are lightweight, share the host kernel, and start faster
+    - C) VMs are always smaller than containers
+    - D) Containers cannot be orchestrated
+
+20. 🔴 Which **THREE** are Microsoft cloud **deployment models**? (Choose three)
+    - A) Public
+    - B) Private
+    - C) Hybrid
+    - D) Serverless
+    - E) IaaS
+
+21. 🟠 Which is the correct relationship between **authentication and authorization**?
+    - A) Authorization verifies identity, then authentication grants access
+    - B) Authentication verifies identity first; authorization then determines access
+    - C) They are the same step
+    - D) RBAC performs authentication
+
+22. 🔴 A user must **view resources for auditing** but **never modify or delete** anything (least privilege). Which role?
+    - A) Owner
+    - B) Contributor
+    - C) Reader
+    - D) User Access Administrator
+
+23. 🟠 Only the **Owner** role (and User Access Administrator) can do which action that **Contributor** cannot?
+    - A) Create resources
+    - B) Delete resources
+    - C) Assign roles / grant access to others
+    - D) View resources
+
+24. 🔴 Which **TWO** are authentication **factor categories** used in MFA? (Choose two)
+    - A) Something you know
+    - B) Something you download
+    - C) Something you have
+    - D) Something you sell
+    - E) Something you rename
+
+25. 🟠 Which capability requires a **compliant, Intune-managed device** as a condition for accessing a sensitive app?
+    - A) A network security group
+    - B) Conditional Access with device compliance
+    - C) A resource lock
+    - D) Single sign-on alone
+
+26. 🔴 Which service provides **unified data governance** — discovering, classifying, and cataloging data **across on-prem, Azure, and SaaS**?
+    - A) Azure Advisor
+    - B) Microsoft Purview
+    - C) Azure Firewall
+    - D) Azure Monitor
+
+27. 🟠 Which portal hosts **Microsoft's** compliance certifications and audit reports (SOC, ISO)?
+    - A) Service Trust Portal
+    - B) Azure Pricing Calculator
+    - C) Azure Cloud Shell
+    - D) Resource Health
+
+28. 🔴 Which tool assesses **your organization's** compliance posture with a **compliance score** and improvement actions?
+    - A) Microsoft Purview Compliance Manager
+    - B) Service Trust Portal
+    - C) Azure Load Balancer
+    - D) Azure Bastion
+
+29. 🟠 Which **THREE** are Zero Trust principles? (Choose three)
+    - A) Verify explicitly
+    - B) Use least-privilege access
+    - C) Assume breach
+    - D) Trust the internal network
+    - E) Disable auditing
+
+30. 🔴 Which is **TRUE** about **budgets** in Cost Management?
+    - A) They automatically shut down resources when exceeded
+    - B) They alert you at thresholds but don't auto-stop spending by default
+    - C) They delete the subscription when exceeded
+    - D) They have no effect
+
+31. 🟠 Which is the correct **service lifecycle** distinction?
+    - A) Preview = production-ready with SLA; GA = early testing
+    - B) Preview = early/may change/often no SLA; GA = production-ready with SLA
+    - C) Both are identical
+    - D) GA services never have SLAs
+
+32. 🔴 Which is **TRUE** about **tags**?
+    - A) They are inherited by all child resources by default
+    - B) They are name/value metadata for cost/organization, not inherited by default
+    - C) They encrypt resources
+    - D) They prevent deletion
+
+33. 🟠 Which service shows the **global public health** of all Azure services worldwide?
+    - A) Azure Status
+    - B) Service Health
+    - C) Resource Health
+    - D) Application Insights
+
+34. 🔴 During an incident you must know if **one specific storage account** is affected by a **platform** issue. Which tool?
+    - A) Azure Status
+    - B) Service Health
+    - C) Resource Health
+    - D) Azure Advisor
+
+35. 🟠 Which is the correct distinction between **metrics and logs** in Azure Monitor?
+    - A) Metrics are detailed text events; logs are numeric
+    - B) Metrics are numeric values over time; logs are detailed event records queried with KQL
+    - C) They are identical
+    - D) Logs cannot be queried
+
+36. 🔴 Which **TWO** services are commonly confused but differ as follows: one is **SIEM/SOAR**, the other is **CSPM + workload protection with Secure Score**. Identify the correct pairing. (Choose two)
+    - A) Microsoft Sentinel — SIEM/SOAR
+    - B) Microsoft Defender for Cloud — SIEM/SOAR
+    - C) Microsoft Defender for Cloud — CSPM + Secure Score
+    - D) Microsoft Sentinel — data governance
+    - E) Azure Advisor — SIEM
+
+37. 🟠 Which tool extends **Azure management/governance** to **on-premises and multi-cloud** resources?
+    - A) Azure Arc
+    - B) Azure DNS
+    - C) Azure CDN
+    - D) Azure Bastion
+
+38. 🔴 A company uses **Microsoft 365** (SaaS). After a phishing attack, who is responsible for securing the **compromised accounts and mailbox data**?
+    - A) Microsoft, because it's SaaS
+    - B) The customer — identities and data are always the customer's responsibility
+    - C) The ISP
+    - D) Shared with no clear owner
+
+39. 🟠 Which is **TRUE** about **serverless** computing?
+    - A) There are no servers, so nothing to secure
+    - B) The provider manages servers; you still own code, data, and access
+    - C) It runs on the client device
+    - D) It removes data responsibility
+
+40. 🔴 Which **TWO** cost optimizations apply to a **fault-tolerant, interruptible batch** workload seeking the **lowest** price? (Choose two)
+    - A) Spot Virtual Machines
+    - B) Autoscaling to match the queue
+    - C) 3-year Reservations for the whole workload
+    - D) Dedicated Host
+    - E) Pay-as-you-go at max size 24/7
+
+41. 🟠 Which service provides an **in-memory cache** to speed up applications and reduce database load?
+    - A) Azure Cache for Redis
+    - B) Azure Blob Storage
+    - C) Azure DNS
+    - D) Azure Files
+
+42. 🔴 Which is **FALSE** about **region pairs**?
+    - A) They reside in the same geography
+    - B) They are typically 300+ miles apart
+    - C) Platform updates roll out to both regions simultaneously
+    - D) They support disaster recovery
+
+43. 🟠 Which **THREE** are benefits of **Infrastructure as Code (ARM/Bicep)**? (Choose three)
+    - A) Repeatable deployments
+    - B) Idempotency
+    - C) Version control in source repos
+    - D) Guaranteed zero cost
+    - E) Elimination of subscriptions
+
+44. 🔴 A VNet-hosted app must reach **Azure SQL Database privately** so traffic never uses a public endpoint. Which feature?
+    - A) A public IP on the database
+    - B) Private Endpoint (Private Link)
+    - C) Azure DNS only
+    - D) A larger VM
+
+45. 🟠 Which is the correct **customer responsibility** order, MOST → LEAST?
+    - A) SaaS → PaaS → IaaS
+    - B) IaaS → PaaS → SaaS
+    - C) PaaS → SaaS → IaaS
+    - D) SaaS → IaaS → PaaS
+
+46. 🔴 Which is **TRUE** about **composite SLAs** for services in a dependency chain?
+    - A) You take the highest individual SLA
+    - B) You multiply the SLAs, which lowers the overall figure
+    - C) You add the SLAs
+    - D) SLAs cannot be combined
+
+47. 🟠 Which service is BEST for a **code-free/low-code automated workflow** (e.g., "when an email arrives, save the attachment to storage")?
+    - A) Azure Logic Apps
+    - B) Azure Virtual Machines
+    - C) Azure Blob Storage
+    - D) Azure DNS
+
+48. 🔴 Which **TWO** statements are TRUE about **Microsoft Entra ID**? (Choose two)
+    - A) It is Microsoft's cloud identity and access management service
+    - B) It is identical to on-premises Active Directory Domain Services
+    - C) It can synchronize with on-prem AD via Microsoft Entra Connect
+    - D) It is a storage redundancy option
+    - E) It provides compute power
+
+49. 🟠 Which passwordless method removes the password entirely, leaving **nothing to phish or reuse**?
+    - A) SMS one-time codes
+    - B) Windows Hello / FIDO2 keys / Authenticator app
+    - C) A shared service account
+    - D) A very long password
+
+50. 🔴 Which statement is **FALSE**?
+    - A) Azure Monitor collects metrics and logs
+    - B) Azure Advisor gives recommendations across five categories
+    - C) Azure Status is personalized to your specific resources
+    - D) Application Insights monitors application performance
+
+---
+
+### ✅ Challenge Exam C — Answer Key
+
+| # | Ans | Rationale | # | Ans | Rationale |
+|---|-----|-----------|---|-----|-----------|
+| 1 | B | Fault tolerance = no downtime on failure | 26 | B | Purview = data governance |
+| 2 | B | DR = recover after region loss | 27 | A | Service Trust Portal = MS certifications |
+| 3 | A, C | VM=IaaS; App Service=PaaS | 28 | A | Compliance Manager = your score |
+| 4 | B | CapEx → OpEx | 29 | A, B, C | Verify/least-priv/assume breach |
+| 5 | C | Resource group = management, not physical | 30 | B | Budgets alert, don't auto-stop |
+| 6 | C | Zones deliver 99.99% | 31 | B | Preview=no SLA; GA=SLA |
+| 7 | B | MGs nest, govern subscriptions | 32 | B | Tags = metadata, not inherited |
+| 8 | C | FALSE: ARM works with all tools | 33 | A | Azure Status = global |
+| 9 | B | Site-to-site VPN over internet | 34 | C | Resource Health = one resource |
+| 10 | C | ExpressRoute = private, high bandwidth | 35 | B | Metrics=numbers; logs=events (KQL) |
+| 11 | A, B | Fault + update domains (Availability Set) | 36 | A, C | Sentinel=SIEM/SOAR; Defender=CSPM/Secure Score |
+| 12 | D | RA-GZRS = max durability + secondary read | 37 | A | Azure Arc = hybrid/multi-cloud |
+| 13 | A | Storage cost Hot>Cool>Archive | 38 | B | SaaS: identities/data = customer |
+| 14 | A | Front Door global + App Gateway regional | 39 | B | Serverless: provider manages servers |
+| 15 | A | DDoS Basic = free/automatic | 40 | A, B | Spot + autoscale for interruptible batch |
+| 16 | A, C | Bastion: no public IP, TLS via portal | 41 | A | Cache for Redis = in-memory |
+| 17 | B | AKS = managed Kubernetes | 42 | C | FALSE: updates are sequential, not simultaneous |
+| 18 | C | VM Scale Sets = autoscale fleet | 43 | A, B, C | IaC: repeatable, idempotent, versioned |
+| 19 | B | Containers share kernel, lightweight | 44 | B | Private Endpoint = private PaaS access |
+| 20 | A, B, C | Public/Private/Hybrid = deployment models | 45 | B | IaaS → PaaS → SaaS |
+| 21 | B | AuthN first, then AuthZ | 46 | B | Multiply SLAs (lowers total) |
+| 22 | C | Reader = view only | 47 | A | Logic Apps = low-code workflow |
+| 23 | C | Owner can assign roles; Contributor can't | 48 | A, C | Entra ID = cloud IAM; syncs via Entra Connect |
+| 24 | A, C | Know + have (also "are") | 49 | B | Passwordless = Hello/FIDO2/Authenticator |
+| 25 | B | Conditional Access + device compliance | 50 | C | FALSE: Azure Status is GLOBAL, not personalized |
+
+**Score: ___ / 50** &nbsp; **Target: 45/50 correct.**
+
+---
+
+## 🏁 Challenge Exam Tracker
+
+| Exam | Attempt 1 | Attempt 2 | Ready when |
+|------|:---------:|:---------:|:----------:|
+| Challenge Exam A | ___ / 50 | ___ / 50 | ≥ 45 |
+| Challenge Exam B | ___ / 50 | ___ / 50 | ≥ 45 |
+| Challenge Exam C | ___ / 50 | ___ / 50 | ≥ 45 |
+
+> **If you score 45+/50 on all three challenge exams, you are over-prepared for the real AZ-900 — go book it with confidence.** 🎯
+
+### 🧠 Why these are harder than the real exam
+- **Closer distractors:** wrong options are real Azure services that *almost* fit.
+- **Trap wording:** watch for **NOT / FALSE / EXCEPT** and "minimum SKU that satisfies BOTH".
+- **Multi-answer:** "choose two/three" removes lucky guessing.
+- **Blended scenarios:** many stems require combining two concepts (e.g., baseline Reservations + spike autoscale).
+
+➡️ **Back to:** [Overview](#overview) · [Advanced Scenarios](#advanced) · [Standard Mock Exams](#mock) · [Revision Sheet](#revision)
+
+</script>
+      <div class="md-body" id="md-challenge"></div>
+    </section>
     <section id="special" class="doc">
       <script type="text/markdown" data-target="md-special">
 # 🎲 AZ-900 Special Question Types
@@ -10544,7 +11664,7 @@ You've studied **500 practice questions**, **5 mock exams**, every special quest
 
   <footer>End of guide &bull; AZ-900 Microsoft Azure Fundamentals &bull; Good luck! 🚀<br>Prepared &amp; owned by <span class="own">Sayandeep Adhikary</span> &bull; &copy; 2026</footer>
 </main>
-<button id="toTop" title="Back to top">&#8593;</button>
+<button id="toTop" title="Back to top" aria-label="Back to top">&#8593;</button>
 <script>
 /**
  * marked v15.0.12 - a markdown parser
@@ -10620,6 +11740,8 @@ if(__exports != exports)module.exports = exports;return module.exports}));
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   if (window.marked && marked.setOptions) { marked.setOptions({ gfm: true, breaks: false, headerIds: true, mangle: false }); }
+
+  // Render each embedded markdown block
   document.querySelectorAll('script[type="text/markdown"]').forEach(function (el) {
     var target = document.getElementById(el.getAttribute('data-target'));
     if (target && window.marked) {
@@ -10627,20 +11749,42 @@ document.addEventListener('DOMContentLoaded', function () {
       catch (e) { target.textContent = el.textContent; }
     }
   });
+
+  // Wrap tables so they scroll horizontally on small screens
+  document.querySelectorAll('.md-body table').forEach(function (t) {
+    if (t.parentNode && t.parentNode.classList && t.parentNode.classList.contains('table-wrap')) return;
+    var w = document.createElement('div');
+    w.className = 'table-wrap';
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+  });
+
+  var sidebar = document.getElementById('sidebar');
+  var backdrop = document.getElementById('backdrop');
+  var toggle = document.getElementById('menuToggle');
+  var toTop = document.getElementById('toTop');
+
+  function openMenu() { sidebar.classList.add('open'); backdrop.classList.add('show'); if (toggle) toggle.setAttribute('aria-expanded', 'true'); }
+  function closeMenu() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); if (toggle) toggle.setAttribute('aria-expanded', 'false'); }
+
+  if (toggle) { toggle.addEventListener('click', function () { sidebar.classList.contains('open') ? closeMenu() : openMenu(); }); }
+  if (backdrop) { backdrop.addEventListener('click', closeMenu); }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+  // Active-section highlighting + back-to-top visibility
   var links = [].slice.call(document.querySelectorAll('#sidebar a'));
   var secs = [].slice.call(document.querySelectorAll('section.doc'));
-  var toTop = document.getElementById('toTop');
   function onScroll() {
-    var pos = window.pageYOffset + 130, cur = secs[0];
+    var pos = window.pageYOffset + 140, cur = secs[0];
     secs.forEach(function (s) { if (s.offsetTop <= pos) cur = s; });
     if (cur) { links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + cur.id); }); }
     toTop.style.display = window.pageYOffset > 420 ? 'block' : 'none';
   }
-  window.addEventListener('scroll', onScroll); onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-  var mt = document.getElementById('menuToggle'), sb = document.getElementById('sidebar');
-  if (mt) { mt.addEventListener('click', function () { sb.classList.toggle('open'); }); }
-  document.querySelectorAll('#sidebar a').forEach(function (a) { a.addEventListener('click', function () { sb.classList.remove('open'); }); });
+
+  // Close the drawer after tapping a nav link (mobile)
+  links.forEach(function (a) { a.addEventListener('click', closeMenu); });
 });
 </script>
 </body>
